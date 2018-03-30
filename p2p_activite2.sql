@@ -132,6 +132,8 @@ INSERT INTO Commentaire (article_id, auteur_id, contenu, date_commentaire) VALUE
 
 -- Début activité 2
 
+SET lc_time_names = 'fr_FR';
+
 --- Affichage de la page acceuil
 
 SELECT titre, DATE_FORMAT(date_publication, '%d/%m/%Y') AS Cree_le, Utilisateur.pseudo AS Auteur, resume, COUNT(Commentaire.id) AS nombre_commentaires
@@ -164,7 +166,7 @@ ORDER BY date_de_publication DESC;
 --pseudo de l’auteur, titre et résumé de chaque article (triés du plus récent au plus vieux) 
 --de la catégorie 3.
 
-SELECT DATE_FORMAT(date_publication, '%d/%m/%Y - %H:%i') AS date_publication, Utilisateur.pseudo AS Auteur, titre, Categorie.nom AS Categorie 
+SELECT DATE_FORMAT(date_publication, '%d/%m/%Y - %H:%i') AS date_publication, Utilisateur.pseudo AS Auteur, titre, resume, Categorie.nom AS Categorie 
 FROM Article
 INNER JOIN Utilisateur ON Utilisateur.id = Article.auteur_id
 INNER JOIN Categorie_article ON Article.id = Categorie_article.article_id
@@ -172,11 +174,24 @@ INNER JOIN Categorie ON Categorie_article.categorie_id = Categorie.id
 WHERE Categorie.id = '3'
 ORDER BY date_publication DESC;
 
+-- Remarque : Avec la colonne resume l'affichage sur la console est incomprehensible.
 
+--Article - id de l’article = 4
 
-SELECT Article.id, Article.titre, COUNT(commentaire.id) FROM Commentaire
-INNER JOIN Article ON Article.id = Commentaire.article_id
-GROUP BY Article.titre;
+--récupérer la date de publication (format “12 octobre 2014 à 17 heures 47”),
+-- le titre, le contenu, les noms des catégories de l’article 4, ainsi que le pseudo de son auteur.
+
+SELECT DATE_FORMAT (date_publication, '%e %M %Y à %H heures %i') AS Publie_le, titre, contenu, Utilisateur.pseudo AS Auteur, GROUP_CONCAT(Categorie.nom) AS Categories
+FROM Article 
+INNER JOIN Utilisateur ON Utilisateur.id = Article.auteur_id
+INNER JOIN Categorie_article ON Article.id = Categorie_article.article_id
+INNER JOIN Categorie ON Categorie_article.categorie_id = Categorie.id
+WHERE Article.id = '4'
+ORDER By Publie_le DESC;
+
+-- Remarque : Avec la colonne contenu l'affichage sur la console est incomprehensible.
+
+-- Récupération de la page commentaire (récupérer du sujet)
 
 
 
