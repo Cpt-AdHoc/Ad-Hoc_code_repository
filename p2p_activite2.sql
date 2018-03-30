@@ -130,11 +130,11 @@ INSERT INTO Commentaire (article_id, auteur_id, contenu, date_commentaire) VALUE
 (5, NULL, 'Mouais, pas convaincue...', '2014-11-09 09:09:09');
 
 
--- Début activité 2
+-- Debut activite 2
 
 SET lc_time_names = 'fr_FR';
 
---- Affichage de la page acceuil
+-- Affichage de la page acceuil
 
 SELECT titre, DATE_FORMAT(date_publication, '%d/%m/%Y') AS Cree_le, Utilisateur.pseudo AS Auteur, resume, COUNT(Commentaire.id) AS nombre_commentaires
 FROM Article
@@ -191,7 +191,7 @@ ORDER By Publie_le DESC;
 
 -- Remarque : Avec la colonne contenu l'affichage sur la console est incomprehensible.
 
--- Récupération de la page commentaire (récupérer du sujet)
+-- Recuperation de la page commentaire (récupérer du sujet)
 
 SELECT Commentaire.contenu,
               DATE_FORMAT(Commentaire.date_commentaire, '%d/%m/%Y') AS Publie_le, Utilisateur.pseudo
