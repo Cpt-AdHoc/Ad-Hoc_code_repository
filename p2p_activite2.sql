@@ -181,17 +181,24 @@ ORDER BY date_publication DESC;
 --récupérer la date de publication (format “12 octobre 2014 à 17 heures 47”),
 -- le titre, le contenu, les noms des catégories de l’article 4, ainsi que le pseudo de son auteur.
 
-SELECT DATE_FORMAT (date_publication, '%e %M %Y à %H heures %i') AS Publie_le, titre, contenu, Utilisateur.pseudo AS Auteur, GROUP_CONCAT(Categorie.nom) AS Categories
+SELECT DATE_FORMAT(date_publication, '%e %M %Y à %H heures %i') AS Publie_le, titre, contenu, Utilisateur.pseudo AS Auteur, GROUP_CONCAT(Categorie.nom) AS Categories
 FROM Article 
-INNER JOIN Utilisateur ON Utilisateur.id = Article.auteur_id
-INNER JOIN Categorie_article ON Article.id = Categorie_article.article_id
-INNER JOIN Categorie ON Categorie_article.categorie_id = Categorie.id
+LEFT JOIN Utilisateur ON Utilisateur.id = Article.auteur_id
+LEFT JOIN Categorie_article ON Article.id = Categorie_article.article_id
+LEFT JOIN Categorie ON Categorie_article.categorie_id = Categorie.id
 WHERE Article.id = '4'
 ORDER By Publie_le DESC;
 
 -- Remarque : Avec la colonne contenu l'affichage sur la console est incomprehensible.
 
 -- Récupération de la page commentaire (récupérer du sujet)
+
+SELECT Commentaire.contenu,
+              DATE_FORMAT(Commentaire.date_commentaire, '%d/%m/%Y'), Utilisateur.pseudo
+FROM Commentaire
+LEFT JOIN Utilisateur ON Commentaire.auteur_id = Utilisateur.id
+WHERE Commentaire.article_id = 2
+ORDER BY Commentaire.date_commentaire;
 
 
 
