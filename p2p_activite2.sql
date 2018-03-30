@@ -164,7 +164,14 @@ ORDER BY date_de_publication DESC;
 --pseudo de l’auteur, titre et résumé de chaque article (triés du plus récent au plus vieux) 
 --de la catégorie 3.
 
-SELECT DATE_FORMAT(date_publication, '%d/%m/%Y '
+SELECT DATE_FORMAT(date_publication, '%d/%m/%Y - %H:%i') AS date_publication, Utilisateur.pseudo AS Auteur, titre, Categorie.nom AS Categorie 
+FROM Article
+INNER JOIN Utilisateur ON Utilisateur.id = Article.auteur_id
+INNER JOIN Categorie_article ON Article.id = Categorie_article.article_id
+INNER JOIN Categorie ON Categorie_article.categorie_id = Categorie.id
+WHERE Categorie.id = '3'
+ORDER BY date_publication DESC;
+
 
 
 SELECT Article.id, Article.titre, COUNT(commentaire.id) FROM Commentaire
